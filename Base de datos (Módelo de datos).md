@@ -1,6 +1,3 @@
-La posibilidad de poder contar con un backend as a service para facilitar algunos datos en *Supabase* es una buena opción
-
-![[First Database Diagram.png]]
 
 ## 🎯 Explicación Detallada de Campos Clave
 
@@ -211,25 +208,88 @@ CREATE TABLE ai_models (
 );
 ```
 
-###  Tabla de feedback para mejora de IA
+###  Tabla de ml_feedback para mejora de IA
 
 ```
-CREATE TABLE ai_feedback (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    task_id UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
-    
-    -- Feedback sobre predicciones
-    predicted_priority VARCHAR(20),
-    actual_priority VARCHAR(20), -- Según usuario
-    predicted_completion_probability DECIMAL(5,4),
-    actual_completed BOOLEAN,
-    completed_on_time BOOLEAN,
-    
-    -- Metadata
-    feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    used_for_training BOOLEAN DEFAULT false,
-    
-    INDEX idx_feedback_training (used_for_training, feedback_date)
-);
+CREATE TABLE ml_feedback
+(
+    id uuid NOT NULL,
+    task_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    feedback_type character varying(50) COLLATE pg_catalog."default",
+    was_useful boolean,
+    actual_priority character varying(20) COLLATE pg_catalog."default",
+    actual_completion_time integer,
+    created_at timestamp without time zone,
+    CONSTRAINT ml_feedback_pkey PRIMARY KEY (id),
+    CONSTRAINT ml_feedback_task_id_fkey FOREIGN KEY (task_id)
+        REFERENCES public.tasks (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT ml_feedback_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
 ```
+
+### Tabla task_ml_data para registrar datos para la IA:
+
+```
+CREATE TABLE task_ml_data
+(
+    id uuid NOT NULL,
+    task_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    ml_priority_score numeric(5,4),
+    predicted_completion_time integer,
+    recommended_schedule character varying(50) COLLATE pg_catalog."default",
+    features jsonb,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    CONSTRAINT task_ml_data_pkey PRIMARY KEY (id),
+    CONSTRAINT task_ml_data_task_id_fkey FOREIGN KEY (task_id)
+        REFERENCES public.tasks (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT task_ml_data_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+```
+
+
+### Tabla ai_feedback antigua tabla para obtener feedbback en el anterior módelo
+
+```
+CREATE TABLE ai_feedback
+(
+    id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    task_id uuid NOT NULL,
+    predicted_priority character varying(20) COLLATE pg_catalog."default",
+    actual_priority character varying(20) COLLATE pg_catalog."default",
+    predicted_completion_probability numeric(5,4),
+    actual_completed boolean,
+    completed_on_time boolean,
+    feedback_date timestamp without time zone,
+    used_for_training boolean,
+    CONSTRAINT ai_feedback_pkey PRIMARY KEY (id),
+    CONSTRAINT ai_feedback_task_id_fkey FOREIGN KEY (task_id)
+        REFERENCES public.tasks (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT ai_feedback_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
+```
+
+
+## Esquema ERD: 
+
+![[ERD Smart task less information.png]]

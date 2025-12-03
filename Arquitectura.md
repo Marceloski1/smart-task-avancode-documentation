@@ -1,6 +1,6 @@
-### Propuesta de despliege de la app:
+### Despliege de la app:
 
-![[Arquitectura SmartTask v1.jpg]]
 
+![[Smart task Avancode Despliegue 1.jpg]]
 
 
