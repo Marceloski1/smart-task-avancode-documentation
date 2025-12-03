@@ -3,11 +3,11 @@
 **Sistema:** SmartTask – Asistente Inteligente de Priorización de Tareas  
 **Versión:** 1.0  
 **Autores:** 
-		- Eduardo Marcelo Mazzola Fenández 
-		- Andy Clemente Gago 
-		- Daryll Lorenzo .... 
-		- Carlos Miguel Piedra
-		- Roberto José Martínez 
+	- Daryll Lorenzo Alfonso - [https://github.com/DaryllLorenzo](https://github.com/DaryllLorenzo)|
+	- Roberto José Martínez Barrios - [https://github.com/AzerXP](https://github.com/AzerXP)|
+	- Eduardo Marcelo Mazzola Fernández - [https://github.com/Marceloski1](https://github.com/Marceloski1)|
+	- Carlos Miguel Piedra Álvarez - [https://github.com/cStoneDev](https://github.com/cStoneDev)|
+	- Andy Clemente Gago - [https://github.com/AndyCG03](https://github.com/AndyCG03)|
 **Última actualización:** Diciembre 2025
 
 ---
