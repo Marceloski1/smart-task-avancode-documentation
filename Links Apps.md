@@ -6,4 +6,6 @@ En esta sección se encuentran los enlaces a los repositorios en github para la 
 
 
 Despliegue final de la app: 
-- Smart task enlace web: https://smart-task-jade-kappa.vercel.app
+- Smart task enlace frontend: https://smart-task-jade-kappa.vercel.app
+- Smart task enlace backend: https://smart-task-backend-copy.onrender.com
+- Smart task enlace pipeline resumidor: https://pipeline-resumen-fast-api.onrender.com
